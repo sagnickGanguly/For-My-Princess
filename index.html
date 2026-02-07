@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Bachaaa ❤️</title>
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff8fa3;
+            --bg: #fff0f3;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Falling Petals */
+        .petal {
+            position: fixed;
+            top: -10%;
+            color: #ff4d6d;
+            user-select: none;
+            z-index: 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        #container {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .btn {
+            padding: 18px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn:hover { transform: scale(1.05); }
+        .btn:active { transform: scale(0.9); }
+
+        h1 {
+            color: #c9184a;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .show { opacity: 1 !important; transform: translateY(0) !important; }
+
+        #subText {
+            color: #ff4d6d;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .heart-burst {
+            position: absolute;
+            pointer-events: none;
+            animation: burst 0.8s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="content">
+        <button class="btn" id="clickBtn">Click for a surprise ✨</button>
+        <h1 id="mainText">Happy Rose Day Bachaaa! 🌹</h1>
+        <p id="subText">You're the most beautiful flower in my life.</p>
+    </div>
+</div>
+
+<script>
+    const phrases = [
+        "Wait, keep clicking... ✨",
+        "You make me so happy! 🥰",
+        "I have a secret for you...",
+        "Ready for it? 💖",
+        "3...",
+        "2...",
+        "1..."
+    ];
+
+    let count = 0;
+    const btn = document.getElementById('clickBtn');
+    const mainText = document.getElementById('mainText');
+    const subText = document.getElementById('subText');
+
+    // Create falling petals
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        petal.innerHTML = '🌸';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = Math.random() * 3 + 2 + 's';
+        petal.style.opacity = Math.random();
+        petal.style.fontSize = Math.random() * 20 + 10 + 'px';
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 5000);
+    }
+    setInterval(createPetal, 300);
+
+    btn.addEventListener('click', (e) => {
+        // Add click effect
+        const burst = document.createElement('div');
+        burst.classList.add('heart-burst');
+        burst.innerHTML = '❤️';
+        burst.style.left = e.clientX + 'px';
+        burst.style.top = e.clientY + 'px';
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 800);
+
+        if (count < phrases.length) {
+            btn.innerText = phrases[count];
+            count++;
+        } else {
+            btn.style.display = 'none';
+            mainText.classList.add('show');
+            subText.style.display = 'block';
+            
+            // Final burst of roses
+            for(let i=0; i<20; i++) {
+                setTimeout(createPetal, i * 100);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
